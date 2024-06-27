@@ -17,7 +17,7 @@ VERSION != $(GREP) VERSION main.h | $(CUT) -d \" -f2
 PROGNAME != $(GREP) PROGNAME main.h | $(CUT) -d \" -f2
 PROGUPPER != $(GREP) PROGUPPER main.h | $(CUT) -d \" -f2
 
-PREFIX = /usr/local
+PREFIX ?= /usr/local
 
 MANPREFIX.$(PREFIX)=$(PREFIX)/share/man
 MANPREFIX./usr/local=/usr/local/man
@@ -25,12 +25,12 @@ MANPREFIX.=/usr/share/man
 MANPREFIX=$(MANPREFIX.$(PREFIX))
 
 INCLUDES != pkg-config --cflags libnotify
-CFLAGS_EXTRA = -pedantic -Wall -Wextra -Werror -Wno-unused-parameter -Os
+CFLAGS_EXTRA ?= -pedantic -Wall -Wextra -Werror -Wno-unused-parameter -Os
 CFLAGS := $(CFLAGS_EXTRA) $(INCLUDES) $(CFLAGS)
 
 LIBS != pkg-config --libs libnotify
 LIBS := $(LIBS) -lm
-LDFLAGS_EXTRA = -s
+LDFLAGS_EXTRA ?= -s
 LDFLAGS := $(LDFLAGS_EXTRA) $(LDFLAGS)
 
 SRC = main.c options.c battery.c notify.c
